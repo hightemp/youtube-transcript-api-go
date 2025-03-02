@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"encoding/xml"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
@@ -108,7 +108,7 @@ func (api *YouTubeTranscriptApi) fetchVideoHTML(videoID string) (string, error) 
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return "", errors.NewYouTubeRequestFailed(err, videoID)
 	}
@@ -240,7 +240,7 @@ func (t *Transcript) Fetch(httpClient *http.Client) error {
 	}
 	defer resp.Body.Close()
 
-	body, err := ioutil.ReadAll(resp.Body)
+	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return errors.NewYouTubeRequestFailed(err, t.VideoID)
 	}
